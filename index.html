@@ -19,12 +19,24 @@
     <!-- library-section -->
     <section class="library-section">
         <div class="container">
+            <div class="d-flex justify-content-center align-items-center gap-4 my-4 p-5 bg-light">
+                <button class="btn btn-danger" id="decreaseBtn">-</button>
+                <h3 class="m-2 countNo">0</h3><button class="btn btn-danger me-2" id="increaseBtn">+</button>
+                <button class="btn btn-primary" id="resetBtn">Reset</button>
+                <p> Current Status : <span id="statusTxt"></span></p>
+            </div>
             <form class="library">
                 <input type="text" name="" id="titleInput" placeholder="Enter your Book Name" required>
                 <input type="text" name="" id="authorInput" placeholder="Enter your Book Author" required>
                 <button type="submit" class="btn btn-primary add-book-btn">Add Your Book</button>
+
                 <div class="added-book-section mt-4">
-                    <h5>Added Books (<span id="bookCount">0</span>)</h5>
+                    <h5 class="d-flex align-items-center justify-content-between">
+                        <span>Added Books : <span id="bookCount">0</span></span> <span>Readed Books : <span
+                                id="readedBooks">0</span></span>
+                        <span><input type="search" name="" class="form-control mb-0" id="searchBook"
+                                placeholder="Search book or author"></span>
+                    </h5>
                     <ul class="added-book-list list-unstyled mt-3">
                         <!-- <li>
                             <p class="fw-semibold">Book By author</p>
@@ -36,6 +48,7 @@
                     </ul>
                 </div>
             </form>
+
         </div>
     </section>
     <!-- library-section-end -->
@@ -52,6 +65,69 @@
     <script src="assets/js/data/library.js"></script>
     <script src="assets/js/data/book.js"></script>
     <script src="assets/js/main.js"></script>
+    <script>
+
+        const decreaseBtn = document.querySelector('#decreaseBtn');
+        const increaseBtn = document.querySelector('#increaseBtn');
+        const statusTxt = document.querySelector('#statusTxt');
+        let countEl = document.querySelector('.countNo');
+        let count = 0;
+
+        function updateStatus() {
+            if (count >= 500) {
+                statusTxt.innerText = "Completed !";
+            }
+            else if (count >= 300 && count < 500) {
+                statusTxt.innerText = "On Process !";
+            }
+            else {
+                statusTxt.innerText = "Pending !"
+            }
+        }
+
+        increaseBtn.addEventListener('click', () => {
+            count = count + 150;
+            countEl.textContent = count;
+            updateStatus();
+        });
+
+        decreaseBtn.addEventListener('click', () => {
+            if (count > 0) {
+
+                if (count > 600) {
+                    count = count - 100;
+                    countEl.textContent = count;
+                }
+                else if (count > 300) {
+                    count = count - 50;
+                    countEl.textContent = count;
+
+                }
+                else {
+                    count =-count;
+                    countEl.textContent = count;
+                    console.log(count);
+
+                }
+
+            } else {
+                alert('limit finished');
+            }
+            updateStatus();
+            console.log(count);
+
+        });
+
+        document.querySelector('#resetBtn').addEventListener('click', () => {
+            count = 0;
+            countEl.innerText = count;
+            updateStatus();
+            console.log(count);
+        });
+
+        updateStatus();
+
+    </script>
 </body>
 
 </html>
